@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@section head  {
+    @foreach (var file in System.IO.Directory.GetFiles($"{Environment.CurrentDirectory}/ClientApp/build/static/css", "main.*.css", System.IO.SearchOption.TopDirectoryOnly))
+    {
+        <link href="~/ClientApp/build/static/css/@System.IO.Path.GetFileName(file)" type="text/css" />
+    }
+}
+
+<div id="root">Loading...</div>
+
+@section scripts {
+    @foreach (var file in System.IO.Directory.GetFiles($"{Environment.CurrentDirectory}/ClientApp/build/static/js", "main.*.js", System.IO.SearchOption.TopDirectoryOnly))
+    {
+        <script src="~/ClientApp/build/static/js/@System.IO.Path.GetFileName(file)" type="text/javascript"></script>
+    }
+}

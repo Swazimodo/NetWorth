@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="react-app">Loading...</div>
+
+@section scripts {
+    <script>
+        window.__environmentName = "@ViewData["EnvironmentName"]";
+    </script>
+    <script src="~/ClientApp/dist/main.js" type="text/javascript" asp-append-version="true"></script>
+}
