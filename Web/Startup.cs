@@ -29,35 +29,47 @@ namespace NetWorth.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<AzureB2CSettings>(options => Configuration.GetSection("AzureB2CSettings").Bind(options));
-            var b2cSettings = Configuration.GetSection("AzureB2CSettings").Get<AzureB2CSettings>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddMvc(config =>
+            // In production, the React files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
             {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
+                configuration.RootPath = "ClientApp/build";
+            });
+            //services.Configure<AzureB2CSettings>(options => Configuration.GetSection("AzureB2CSettings").Bind(options));
+            //var b2cSettings = Configuration.GetSection("AzureB2CSettings").Get<AzureB2CSettings>();
 
-                config.Filters.Add(new AuthorizeFilter(policy));
-            })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddMvc(config =>
+            //{
+            //    //var policy = new AuthorizationPolicyBuilder()
+            //    //    .RequireAuthenticatedUser()
+            //    //    .Build();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //    //config.Filters.Add(new AuthorizeFilter(policy));
+            //})
+            //.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = b2cSettings.SignUpInPolicyName;
-            })
-                .AddOpenIdConnect(b2cSettings.SignUpInPolicyName, options => SetOptionsForOpenIdConnectPolicy(b2cSettings.SignUpInPolicyName, b2cSettings, options))
-                .AddOpenIdConnect(b2cSettings.PasswordResetPolicyName, options => SetOptionsForOpenIdConnectPolicy(b2cSettings.PasswordResetPolicyName, b2cSettings, options))
-                .AddCookie();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //// In production, the React files will be served from this directory
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/build";
+            //});
+
+            ////services.AddAuthentication(options =>
+            ////{
+            ////    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            ////    options.DefaultChallengeScheme = b2cSettings.SignUpInPolicyName;
+            ////})
+            ////    .AddOpenIdConnect(b2cSettings.SignUpInPolicyName, options => SetOptionsForOpenIdConnectPolicy(b2cSettings.SignUpInPolicyName, b2cSettings, options))
+            ////    .AddOpenIdConnect(b2cSettings.PasswordResetPolicyName, options => SetOptionsForOpenIdConnectPolicy(b2cSettings.PasswordResetPolicyName, b2cSettings, options))
+            ////    .AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.ConfigureSecurityHeaders();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,30 +81,80 @@ namespace NetWorth.Web
                 app.UseHsts();
             }
 
-            app.UseStaticFiles();
-            app.UseAuthentication();
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=AuthorizedSpaFallBack}");
-            });
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller}/{action=Index}/{id?}");
+            //});
 
             // here you can see we make sure it doesn't start with /api, if it does, it'll 404 within .NET if it can't be found
-            app.MapWhen(x => !x.Request.Path.Value.StartsWith("/api"), builder =>
-            {
-                builder.UseMvc(routes =>
+            app.MapWhen(x => !x.Request.Path.Value.StartsWith("/api") && !x.Request.Path.Value.StartsWith("/ClientApp")
+                && !x.Request.Path.Value.StartsWith("/build") && !x.Request.Path.Value.StartsWith("/static"), builder =>
                 {
-                    routes.MapSpaFallbackRoute(
-                        name: "spa-fallback",
-                        defaults: new { controller = "Home", action = "AuthorizedSpaFallBack" });
+                    builder.UseMvc(routes =>
+                    {
+                        routes.MapSpaFallbackRoute(
+                            name: "spa-fallback",
+                            defaults: new { controller = "Home", action = "AuthorizedSpaFallBack" });
+                    });
                 });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
             });
 
+
+
+            ////app.ConfigureSecurityHeaders();
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            //    app.UseHsts();
+            //}
+
+            //app.UseStaticFiles("/ClientApp/build/**");
+            ////app.UseAuthentication();
+            //app.UseHttpsRedirection();
+            ////app.UseSpaStaticFiles(new StaticFileOptions() {
+            ////    RequestPath="/ClientApp/build/**"
+            ////});
+
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}");
+            //});
+
+            ////app.UseSpa(spa =>
+            ////{
+            ////    spa.Options.SourcePath = "ClientApp";
+
+            ////    if (env.IsDevelopment())
+            ////    {
+            ////        spa.UseReactDevelopmentServer(npmScript: "start");
+            ////    }
+            ////});
+
             //// here you can see we make sure it doesn't start with /api, if it does, it'll 404 within .NET if it can't be found
-            //app.MapWhen(x => !x.Request.Path.Value.StartsWith("/api"), builder =>
+            //app.MapWhen(x => !x.Request.Path.Value.StartsWith("/api") && !x.Request.Path.Value.StartsWith("/ClientApp")
+            //    && !x.Request.Path.Value.StartsWith("/build") && !x.Request.Path.Value.StartsWith("/static"), builder =>
             //{
             //    builder.UseMvc(routes =>
             //    {
@@ -102,15 +164,44 @@ namespace NetWorth.Web
             //    });
             //});
 
-            //app.UseSpa(spa =>
-            //{
-            //    spa.Options.SourcePath = "ClientApp/build";
+            ////app.UseMvc(routes =>
+            ////{
+            ////    routes.MapRoute(
+            ////        name: "default",
+            ////        template: "{controller=Home}/{action=AuthorizedSpaFallBack}");
+            ////});
 
-            //    if (env.IsDevelopment())
-            //    {
-            //        spa.UseReactDevelopmentServer(npmScript: "start");
-            //    }
-            //});
+            ////// here you can see we make sure it doesn't start with /api, if it does, it'll 404 within .NET if it can't be found
+            ////app.MapWhen(x => !x.Request.Path.Value.StartsWith("/api"), builder =>
+            ////{
+            ////    builder.UseMvc(routes =>
+            ////    {
+            ////        routes.MapSpaFallbackRoute(
+            ////            name: "spa-fallback",
+            ////            defaults: new { controller = "Home", action = "AuthorizedSpaFallBack" });
+            ////    });
+            ////});
+
+            ////// here you can see we make sure it doesn't start with /api, if it does, it'll 404 within .NET if it can't be found
+            ////app.MapWhen(x => !x.Request.Path.Value.StartsWith("/api"), builder =>
+            ////{
+            ////    builder.UseMvc(routes =>
+            ////    {
+            ////        routes.MapSpaFallbackRoute(
+            ////            name: "spa-fallback",
+            ////            defaults: new { controller = "Home", action = "AuthorizedSpaFallBack" });
+            ////    });
+            ////});
+
+            ////app.UseSpa(spa =>
+            ////{
+            ////    spa.Options.SourcePath = "ClientApp/build";
+
+            ////    if (env.IsDevelopment())
+            ////    {
+            ////        spa.UseReactDevelopmentServer(npmScript: "start");
+            ////    }
+            ////});
         }
 
         private void SetOptionsForOpenIdConnectPolicy(string policyName, AzureB2CSettings b2cSettings, OpenIdConnectOptions options)

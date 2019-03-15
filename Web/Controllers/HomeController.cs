@@ -23,8 +23,7 @@ namespace NetWorth.Web.Controllers
             ViewData["EnvironmentName"] = _siteConfigurationSettings.EnvironmentName;
             return View();
         }
-
-        [Authorize]
+        
         [HttpGet]
         public IActionResult AuthorizedSpaFallBack()
         {
