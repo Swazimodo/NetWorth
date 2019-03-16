@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace NetWorth.Web.Models
 {
-    public class Country
+    public class Currency
     {
-        public string CountryName { get; set; }
-        public string CurrencyName { get; set; }
+        public double Value { get; set; }
         public string CurrencyAbbrv { get; set; }
-        public double ExchangeRateToUSD { get; set; }
     }
 }

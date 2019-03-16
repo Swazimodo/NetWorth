@@ -62,11 +62,11 @@ namespace NetWorth.Web.Tests
             // Arrange
             var countries = new List<Country>
             {
-                new Country() { Id=1, CountryName="United States", CurrencyAbbrv="USD", CurrencyName="US Dollar", ExchangeRateToUSD=1 },
-                new Country() { Id=2, CountryName="Canada", CurrencyAbbrv="CAD", CurrencyName="Candadian Dollar", ExchangeRateToUSD=0.75 },
-                new Country() { Id=3, CountryName="Russia", CurrencyAbbrv="RUB", CurrencyName="Russian Ruble", ExchangeRateToUSD=0.015 },
-                new Country() { Id=4, CountryName="Japan", CurrencyAbbrv="JPY", CurrencyName="Japan Yen", ExchangeRateToUSD=0.75 },
-                new Country() { Id=5, CountryName="England", CurrencyAbbrv="GBP", CurrencyName="Great British Pound", ExchangeRateToUSD=1.33 },
+                new Country() { CountryName="United States", CurrencyAbbrv="USD", CurrencyName="US Dollar", ExchangeRateToUSD=1 },
+                new Country() { CountryName="Canada", CurrencyAbbrv="CAD", CurrencyName="Candadian Dollar", ExchangeRateToUSD=0.75 },
+                new Country() { CountryName="Russia", CurrencyAbbrv="RUB", CurrencyName="Russian Ruble", ExchangeRateToUSD=0.015 },
+                new Country() { CountryName="Japan", CurrencyAbbrv="JPY", CurrencyName="Japan Yen", ExchangeRateToUSD=0.75 },
+                new Country() { CountryName="England", CurrencyAbbrv="GBP", CurrencyName="Great British Pound", ExchangeRateToUSD=1.33 },
             };
             var db = new Mock<IDataContext>();
             db.Setup(x => x.Counties).Returns(countries.AsQueryable());
@@ -84,11 +84,11 @@ namespace NetWorth.Web.Tests
             // Arrange
             var countries = new List<Country>
             {
-                new Country() { Id=1, CountryName="United States", CurrencyAbbrv="USD", CurrencyName="US Dollar", ExchangeRateToUSD=1 },
-                new Country() { Id=2, CountryName="Canada", CurrencyAbbrv="CAD", CurrencyName="Candadian Dollar", ExchangeRateToUSD=0.75 },
-                new Country() { Id=3, CountryName="Russia", CurrencyAbbrv="RUB", CurrencyName="Russian Ruble", ExchangeRateToUSD=0.015 },
-                new Country() { Id=4, CountryName="Japan", CurrencyAbbrv="JPY", CurrencyName="Japan Yen", ExchangeRateToUSD=0.75 },
-                new Country() { Id=5, CountryName="England", CurrencyAbbrv="GBP", CurrencyName="Great British Pound", ExchangeRateToUSD=1.33 },
+                new Country() { CountryName="United States", CurrencyAbbrv="USD", CurrencyName="US Dollar", ExchangeRateToUSD=1 },
+                new Country() { CountryName="Canada", CurrencyAbbrv="CAD", CurrencyName="Candadian Dollar", ExchangeRateToUSD=0.75 },
+                new Country() { CountryName="Russia", CurrencyAbbrv="RUB", CurrencyName="Russian Ruble", ExchangeRateToUSD=0.015 },
+                new Country() { CountryName="Japan", CurrencyAbbrv="JPY", CurrencyName="Japan Yen", ExchangeRateToUSD=0.75 },
+                new Country() { CountryName="England", CurrencyAbbrv="GBP", CurrencyName="Great British Pound", ExchangeRateToUSD=1.33 },
             };
             var db = new Mock<IDataContext>();
             db.Setup(x => x.Counties).Returns(countries.AsQueryable());
@@ -107,11 +107,11 @@ namespace NetWorth.Web.Tests
             // Arrange
             var countries = new List<Country>
             {
-                new Country() { Id=1, CountryName="United States", CurrencyAbbrv="USD", CurrencyName="US Dollar", ExchangeRateToUSD=1 },
-                new Country() { Id=2, CountryName="Canada", CurrencyAbbrv="CAD", CurrencyName="Candadian Dollar", ExchangeRateToUSD=0.75 },
-                new Country() { Id=3, CountryName="Russia", CurrencyAbbrv="RUB", CurrencyName="Russian Ruble", ExchangeRateToUSD=0.015 },
-                new Country() { Id=4, CountryName="Japan", CurrencyAbbrv="JPY", CurrencyName="Japan Yen", ExchangeRateToUSD=0.75 },
-                new Country() { Id=5, CountryName="England", CurrencyAbbrv="GBP", CurrencyName="Great British Pound", ExchangeRateToUSD=1.33 },
+                new Country() { CountryName="United States", CurrencyAbbrv="USD", CurrencyName="US Dollar", ExchangeRateToUSD=1 },
+                new Country() { CountryName="Canada", CurrencyAbbrv="CAD", CurrencyName="Candadian Dollar", ExchangeRateToUSD=0.75 },
+                new Country() { CountryName="Russia", CurrencyAbbrv="RUB", CurrencyName="Russian Ruble", ExchangeRateToUSD=0.015 },
+                new Country() { CountryName="Japan", CurrencyAbbrv="JPY", CurrencyName="Japan Yen", ExchangeRateToUSD=0.75 },
+                new Country() { CountryName="England", CurrencyAbbrv="GBP", CurrencyName="Great British Pound", ExchangeRateToUSD=1.33 },
             };
             var db = new Mock<IDataContext>();
             db.Setup(x => x.Counties).Returns(countries.AsQueryable());
