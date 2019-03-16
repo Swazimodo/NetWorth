@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Web
+namespace NetWorth.Web
 {
     public class Program
     {
@@ -19,6 +19,12 @@ namespace Web
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(config => {
+                    config.SetBasePath(Directory.GetCurrentDirectory());
+                    config.AddJsonFile("Data/SeedData/Countries.json");
+                    config.AddJsonFile("Data/SeedData/RosterItems.json");
+                    config.AddJsonFile("Data/SeedData/Users.json");
+                })
                 .UseStartup<Startup>();
     }
 }

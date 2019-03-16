@@ -1,0 +1,14 @@
+{
+  "Users": [
+    {
+      "Id": 1,
+      "B2CToken": "asdf1",
+      "UserName": "Sam Nesbitt"
+    },
+    {
+      "Id": 2,
+      "B2CToken": "asdf2",
+      "UserName": "Bob Smith"
+    }
+  ]
+}

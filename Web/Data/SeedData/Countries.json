@@ -1,0 +1,70 @@
+{
+  "Countries": [
+    {
+      "CountryName": "Canada",
+      "CurrencyName": "Canadian Dollar",
+      "CurrencyAbbrv": "CAD",
+      "ExchangeRateToUSD": 0.75
+    },
+    {
+      "CountryName": "United States",
+      "CurrencyName": "US Dollar",
+      "CurrencyAbbrv": "USD",
+      "ExchangeRateToUSD": 1
+    },
+    {
+      "CountryName": "European Union",
+      "CurrencyName": "Euro",
+      "CurrencyAbbrv": "EUR",
+      "ExchangeRateToUSD": 1.13
+    },
+    {
+      "CountryName": "India",
+      "CurrencyName": "Indian Rupee",
+      "CurrencyAbbrv": "INR",
+      "ExchangeRateToUSD": 0.015
+    },
+    {
+      "CountryName": "Australia",
+      "CurrencyName": "Australian Dollar",
+      "CurrencyAbbrv": "AUD",
+      "ExchangeRateToUSD": 0.71
+    },
+    {
+      "CountryName": "Singapore",
+      "CurrencyName": "Singapore Dollar",
+      "CurrencyAbbrv": "SGD",
+      "ExchangeRateToUSD": 0.74
+    },
+    {
+      "CountryName": "Russia",
+      "CurrencyName": "Russian Ruble",
+      "CurrencyAbbrv": "RUB",
+      "ExchangeRateToUSD": 0.015
+    },
+    {
+      "CountryName": "Japan",
+      "CurrencyName": "Japanese Yen",
+      "CurrencyAbbrv": "JPY",
+      "ExchangeRateToUSD": 0.009
+    },
+    {
+      "CountryName": "New Zealand",
+      "CurrencyName": "New Zealand Dollar",
+      "CurrencyAbbrv": "NZD",
+      "ExchangeRateToUSD": 0.69
+    },
+    {
+      "CountryName": "England",
+      "CurrencyName": "Great British Pound",
+      "CurrencyAbbrv": "GBP",
+      "ExchangeRateToUSD": 1.33
+    },
+    {
+      "CountryName": "--",
+      "CurrencyName": "Bitcoin",
+      "CurrencyAbbrv": "BTC",
+      "ExchangeRateToUSD": 0
+    }
+  ]
+}

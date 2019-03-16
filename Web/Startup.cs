@@ -5,8 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
+using NetWorth.Web.Data;
+using NetWorth.Web.Models;
 
-namespace Web
+namespace NetWorth.Web
 {
     public class Startup
     {
@@ -20,6 +23,11 @@ namespace Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var counties = Configuration.GetSection("Countries").Get<List<Country>>();
+            var users = Configuration.GetSection("Users").Get<List<User>>();
+            var rosterItems = Configuration.GetSection("RosterItems").Get<List<RosterItem>>();
+            services.AddSingleton<IDataContext>(new DataContext(counties, users, rosterItems));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // In production, the React files will be served from this directory
