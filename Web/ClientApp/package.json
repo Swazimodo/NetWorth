@@ -1,7 +1,7 @@
 {
-  "name": "simple-react-app",
-  "version": "3.1.0",
-  "description": "react, react-router, hot-reload, sass.",
+  "name": "net-worth",
+  "version": "1.0.0",
+  "description": "case study for Intuit",
   "main": "index.js",
   "author": "Sam Nesbitt",
   "license": "MIT",
