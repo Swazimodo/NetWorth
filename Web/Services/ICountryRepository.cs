@@ -9,5 +9,6 @@ namespace NetWorth.Web.Services
     public interface ICountryRepository
     {
         List<Country> GetAll();
+        Country GetByCurrencyAbbrv(string abbreviation);
     }
 }
