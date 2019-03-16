@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace NetWorth.Web.Models
+﻿namespace NetWorth.Web.Models
 {
     public class RosterItem
     {
+        public double Value { get; set; }
+        public string currencyAbbrv { get; set; }
     }
 }
