@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
-import { Title } from '../layout';
+import { Title } from '../../layout';
 
 interface IColumn {
     title: string;
@@ -14,7 +14,7 @@ interface ITableProps {
     data: any[][];
 };
 
-export function useEditableTable(props: ITableProps) {
+export function RosterTable(props: ITableProps) {
 
 
 

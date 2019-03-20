@@ -6,14 +6,22 @@ using NetWorth.Web.Services;
 
 namespace NetWorth.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class CurrencyCalcController : Controller
     {
+        private readonly ICountryRepository _countryRepository;
         private readonly ICurrencyConverter _currencyConverter;
 
-        public CurrencyCalcController(ICurrencyConverter currencyConverter)
+        public CurrencyCalcController(ICountryRepository countryRepository, ICurrencyConverter currencyConverter)
         {
+            _countryRepository = countryRepository;
             _currencyConverter = currencyConverter;
+        }
+
+        [HttpGet]
+        public IActionResult GetCurrenciesList()
+        {
+            return Ok(_countryRepository.GetAll().Select(x => x.CurrencyAbbrv));
         }
 
         [HttpPost]
