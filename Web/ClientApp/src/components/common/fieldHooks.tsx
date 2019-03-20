@@ -18,7 +18,10 @@ export function useNumberField(initialValue?: number) {
     const [value, setValue] = useState(initialValue);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setValue(e.target.valueAsNumber);
+        const value = parseFloat(e.target.value);
+        if (!isNaN(value)) {
+            setValue(value);
+        }
     }
 
     return {
