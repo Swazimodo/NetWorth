@@ -4,11 +4,13 @@ export default class currencyCalc {
 
     constructor(private network: AxiosInstance) { }
 
-    public updateLocation = (location: string) => {
-        return this.network.post('/api/admin/location', { location });
+    public getCurrencies = () => {
+        return this.network.get<string[]>('/api/v1/CurrencyCal');
     }
 
-    public updateTimeZone = () => {
-        return this.network.post('/api/admin/timezone', { currentTime: new Date() });
+    public calculateTotal = () => {
+        return this.network.post<number>('/api/v1/CurrencyCal', {
+            currentTime: new Date()
+        });
     }
 }
