@@ -1,5 +1,5 @@
 import React from 'react';
 
 export function AppDrawer() {
-    return <div id="top-bar">#top-bar</div>;
+    return <nav id="app-drawer">#app-drawer</nav>;
 }

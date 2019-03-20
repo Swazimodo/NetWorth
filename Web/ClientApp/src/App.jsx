@@ -2,14 +2,14 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import Routes from './Routes';
-import { TopBar, AppDrawer } from './components/layout';
+import { TopBar, Footer } from './components/layout';
 
 const App = () => (
   <BrowserRouter>
-    <main className="container">
+    <main>
       <TopBar />
-      <AppDrawer />
       <Routes />
+      <Footer />
     </main>
   </BrowserRouter>
 );
