@@ -1,48 +1,47 @@
-import React, { useState } from 'react';
-import { Table, TableHead, TableBody, TableRow, TableCell } from '@material-ui/core';
-import { Title } from '../../layout';
+import React from 'react';
+import { Table, TableHead, TableBody, TableRow, TableCell, TextField, InputAdornment } from '@material-ui/core';
+import { IRosterRow } from './NetWorthCalc';
+import { useNumberField } from '../../common/fieldHooks';
 
-interface IColumn {
-    title: string;
-    id: string;
-    visible: boolean;
-}
-
-interface ITableProps {
-    title?: string;
-    columns: IColumn[];
-    data: any[][];
-};
-
-export function RosterTable(props: ITableProps) {
-
-
-
+export function RosterTable(props: { data: IRosterRow[], onUpdate: (id: number, value: number) => void, onDelete: (id: number) => void }) {
     return <div className="table">
-        {props.title && Title(props.title)}
         <Table>
             <TableHead>
                 <TableRow>
-                    {props.columns
-                        .filter(x => x.visible)
-                        .map(x => HeaderCell)}
+                    <TableCell>Title</TableCell>
+                    <TableCell>Value</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                {props.data.map(x => Row)}
+                {props.data.map(row => <Row key={row.id} data={row} onUpdate={props.onUpdate} onDelete={props.onDelete} />)}
             </TableBody>
         </Table>
     </div>;
 }
 
-function HeaderCell(props: IColumn, index: number) {
-    return <TableCell>{props.title}</TableCell>;
-}
+function Row(props: { data: IRosterRow, onUpdate: (id: number, value: number) => void, onDelete: (id: number) => void }) {
+    const value = useNumberField(props.data.value);
 
-interface ITableRow {
+    const handleBlur = () => {
+        props.onUpdate(props.data.id, value.value || 0);
+    }
 
-}
-
-function Row(data: ITableRow, index: any) {
-
+    return <TableRow key={props.data.id}>
+        <TableCell>{props.data.title}</TableCell>
+        <TableCell>
+            <TextField
+                value={value.value}
+                margin="none"
+                onChange={value.handleChange}
+                onBlur={handleBlur}
+                InputProps={{
+                    endAdornment: <InputAdornment
+                        position="end"
+                    >
+                        {props.data.currencyAbbrv}
+                    </InputAdornment>,
+                }}
+            />
+        </TableCell>
+    </TableRow>;
 }

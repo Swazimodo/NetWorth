@@ -1,9 +1,10 @@
 import React from 'react';
 import { TextField, Fab } from '@material-ui/core';
 import { useTextField, useNumberField } from '../../common/fieldHooks';
+import { CurrencySelect } from '../../common/CurrencySelect';
 
 
-export function AddRosterRow(onCreate: (title: string, value: number, currencyAbbrv: string) => void) {
+export function AddRosterRow(props: { onCreate: (title: string, value: number, currencyAbbrv: string) => void, currencies: string[] }) {
     const title = useTextField('');
     const equity = useNumberField();
     const liability = useNumberField();
@@ -14,10 +15,11 @@ export function AddRosterRow(onCreate: (title: string, value: number, currencyAb
             return;
         }
         if (equity.value) {
-            onCreate(title.value, equity.value, currencyAbbrv.value);
+            props.onCreate(title.value, equity.value, currencyAbbrv.value);
         }
         if (liability.value) {
-            onCreate(title.value, liability.value, currencyAbbrv.value);
+            const value = liability.value < 0 ? liability.value : liability.value * -1;
+            props.onCreate(title.value, value, currencyAbbrv.value);
         }
         if (equity.value || liability.value) {
             title.setValue('');
@@ -26,7 +28,7 @@ export function AddRosterRow(onCreate: (title: string, value: number, currencyAb
         }
     }
 
-    return <div id="add-roster-row">
+    return <div className="add-roster-row">
         <div className="inner">
             <TextField
                 label="Title"
@@ -43,27 +45,11 @@ export function AddRosterRow(onCreate: (title: string, value: number, currencyAb
                 value={liability.value ? liability.value : ''}
                 onChange={liability.handleChange}
             />
-            {/* <TextField
-                id="standard-select-currency"
-                select
-                label="Select"
-                className={classes.textField}
-                value={this.state.currency}
-                onChange={this.handleChange('currency')}
-                SelectProps={{
-                    MenuProps: {
-                        className: classes.menu,
-                    },
-                }}
-                helperText="Please select your currency"
-                margin="normal"
-            >
-                {currencies.map(option => (
-                    <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                    </MenuItem>
-                ))}
-            </TextField> */}
+            <CurrencySelect
+                currencies={props.currencies}
+                currency={currencyAbbrv.value || ''}
+                onChnage={currencyAbbrv.handleChange}
+            />
             <Fab
                 onClick={createIfValid}
                 color="primary"
