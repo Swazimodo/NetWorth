@@ -49,7 +49,6 @@ export function NetWorthCalc() {
                 <TextField
                     label="Total"
                     value={netWorth}
-                    disabled
                     margin="none"
                 />
                 <CurrencySelect currencies={currencies} currency={targetCurrency.value || ''} onChnage={targetCurrency.handleChange} />
@@ -67,7 +66,8 @@ export interface IRosterRow {
 
 function useTableRows() {
     const [rows, setRows] = useState([] as IRosterRow[]);
-    const [count, setCount] = useState(1);
+    const [count, setCount] = useState(0);
+    let currentCount = count;
 
     const handleValueUpdate = (id: number, value: number) => {
         const index = rows.findIndex(x => x.id === id);
@@ -84,13 +84,14 @@ function useTableRows() {
     }
 
     function handleAdd(title: string, value: number, currencyAbbrv: string) {
-        setCount(count => count + 1);
-        setRows(arr => arr.concat([{
-            id: count,
+        setCount(++currentCount);
+        const row = {
+            id: currentCount,
             title: title,
             value: value,
             currencyAbbrv: currencyAbbrv
-        }]));
+        }
+        setRows(arr => arr.concat([row]));
     }
 
     return {
