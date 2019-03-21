@@ -27,9 +27,14 @@ namespace NetWorth.Web.Controllers
         [HttpPost]
         public IActionResult CalculateTotal([FromBody] CalculateTotalModel model)
         {
+            if (model.Roster.Count == 0)
+            {
+                return Ok(0);
+            }
+
             var usd = model.Roster.Aggregate(
                 0d, 
-                (total, item) => total + _currencyConverter.ConvertToUSD(item.currencyAbbrv, item.Value));
+                (total, item) => total + _currencyConverter.ConvertToUSD(item.CurrencyAbbrv, item.Value));
             var convertedTotal = _currencyConverter.ConvertFromUSD(model.TargetCurrencyAbbrv, usd);
             return Ok(Math.Round(convertedTotal, 2));
         }
